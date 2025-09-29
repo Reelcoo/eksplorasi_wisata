@@ -1,119 +1,15 @@
 <!doctype html>
 <html lang="id">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>JelajahWisata — Portal Informasi Wisata</title>
-  <meta name="description" content="Portal informasi tempat wisata dan ulasan pengunjung. Contoh statis dengan HTML/CSS/JS murni.">
-  <style>
-    /* ---------- Reset & base ---------- */
-    :root{
-      --bg:#0f1724; /* dark slate */
-      --card:#0b1220;
-      --muted:#9aa6b2;
-      --accent:#2dd4bf; /* teal */
-      --glass: rgba(255,255,255,0.04);
-      --radius:12px;
-      --maxwidth:1100px;
-      --gap:18px;
-      color-scheme: dark;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071021 0%, #071827 60%);
-      color:#e6f0f2;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      display:flex;justify-content:center;padding:32px 18px;
-    }
-    .wrap{width:100%;max-width:var(--maxwidth)}
-
-    /* ---------- Header ---------- */
-    header{
-      display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;
-    }
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{
-      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:grid;place-items:center;font-weight:700;color:#012;box-shadow:0 6px 18px rgba(2,6,23,0.6)
-    }
-    .brand h1{font-size:18px;margin:0}
-    nav{display:flex;gap:16px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;font-size:14px}
-    nav a:hover{color:var(--accent)}
-
-    /* ---------- Hero ---------- */
-    .hero{
-      display:grid;grid-template-columns:1fr 360px;gap:18px;margin-bottom:22px;align-items:center
-    }
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:var(--radius);box-shadow:0 6px 30px rgba(2,6,23,0.5)}
-    .hero h2{margin:6px 0 8px;font-size:26px}
-    .hero p{margin:0;color:var(--muted)}
-
-    .searchbox{margin-top:14px;display:flex;gap:10px}
-    .searchbox input{flex:1;padding:12px 14px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:inherit}
-    .searchbox button{padding:12px 14px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),#06b6d4);color:#012;font-weight:600}
-
-    /* Right column - summary */
-    .stats{display:flex;flex-direction:column;gap:10px}
-    .stat{background:var(--card);padding:12px;border-radius:10px}
-    .stat h3{margin:0;font-size:18px}
-    .stat p{margin:4px 0 0;color:var(--muted);font-size:13px}
-
-    /* ---------- categories & filters ---------- */
-    .controls{display:flex;gap:12px;align-items:center;margin-bottom:18px}
-    .cats{display:flex;gap:10px;flex-wrap:wrap}
-    .cat{padding:8px 12px;border-radius:999px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);font-size:13px;cursor:pointer}
-    .cat.active{background:linear-gradient(90deg,var(--accent),#06b6d4);color:#012}
-
-    /* ---------- grid ---------- */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
-    .card{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column}
-    .card .media{height:160px;background-size:cover;background-position:center}
-    .card .content{padding:12px;display:flex;flex-direction:column;gap:8px}
-    .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
-    .title{font-weight:700}
-    .rating{display:inline-flex;gap:6px;align-items:center}
-    .stars{color:gold}
-
-    /* ---------- reviews ---------- */
-    .reviews{margin-top:18px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));border-radius:12px}
-    .review-item{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
-    .review-item:last-child{border-bottom:0}
-    .avatar{width:44px;height:44px;border-radius:10px;background:linear-gradient(180deg,#0ea5a0,#0284c7);display:grid;place-items:center;color:#012;font-weight:700}
-    .review-body{flex:1}
-    .review-body b{display:block}
-    .review-body small{color:var(--muted)}
-
-    /* ---------- modal/detail ---------- */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);padding:28px}
-    .modal.show{display:flex}
-    .modal-card{width:100%;max-width:920px;background:#041223;border-radius:14px;overflow:hidden}
-    .modal-top{display:grid;grid-template-columns:1fr 300px}
-    .gallery{height:320px;background-size:cover;background-position:center}
-    .modal-content{padding:16px}
-    .close{position:absolute;right:18px;top:18px;background:rgba(255,255,255,0.04);border-radius:8px;padding:6px 8px;cursor:pointer}
-
-    /* ---------- footer ---------- */
-    footer{margin-top:22px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center}
-
-    /* ---------- responsive ---------- */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .hero-card{order:1}
-    }
-    @media (max-width:640px){
-      body{padding:18px}
-      .grid{grid-template-columns:1fr}
-      nav{display:none}
-      .searchbox button{padding:12px}
-    }
-
-  </style>
+  <meta name="description"
+    content="Portal informasi tempat wisata dan ulasan pengunjung. Contoh statis dengan HTML/CSS murni.">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -136,41 +32,62 @@
       <div class="hero-card">
         <h2>Temukan tempat wisata yang menarik di sekitarmu</h2>
         <p>Jelajahi koleksi destinasi lengkap dengan foto, informasi ringkas, dan ulasan dari pengunjung.</p>
-
-        <div class="searchbox" role="search">
-          <input id="search" placeholder="Cari: nama tempat, lokasi, kategori..." aria-label="search">
-          <button id="searchBtn">Cari</button>
-        </div>
-
-        <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
-          <div style="font-size:13px;color:var(--muted)">Filter cepat:</div>
-          <div class="cats" id="categories"></div>
-        </div>
-      </div>
-
-      <div class="stats">
-        <div class="stat">
-          <h3 id="totalDest">—</h3>
-          <p>Destinasi terdaftar</p>
-        </div>
-        <div class="stat">
-          <h3 id="avgRating">—</h3>
-          <p>Rating rata-rata</p>
-        </div>
-        <div class="stat">
-          <h3 id="recentReview">—</h3>
-          <p>Ulasan terbaru</p>
-        </div>
       </div>
     </section>
 
     <section>
       <h3 style="margin:0 0 10px">Rekomendasi Populer</h3>
-      <div class="grid" id="grid"></div>
+      <div class="grid">
+        <article class="card">
+          <div class="media"
+            style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=60')">
+          </div>
+          <div class="content">
+            <div class="title">Pantai Wangi</div>
+            <div class="meta">Bali, Kuta • Pantai</div>
+            <div class="rating"><span class="stars">★★★★☆</span> 4.6</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"
+            style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=60')">
+          </div>
+          <div class="content">
+            <div class="title">Gunung Seru</div>
+            <div class="meta">Jawa Barat, Garut • Gunung</div>
+            <div class="rating"><span class="stars">★★★★★</span> 4.8</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"
+            style="background-image:url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1200&q=60')">
+          </div>
+          <div class="content">
+            <div class="title">Museum Merah Putih</div>
+            <div class="meta">DKI Jakarta • Museum</div>
+            <div class="rating"><span class="stars">★★★★☆</span> 4.2</div>
+          </div>
+        </article>
+      </div>
 
-      <div class="reviews" id="ulasan">
+      <div class="reviews">
         <h4 style="margin:0 0 8px">Ulasan Terbaru</h4>
-        <div id="reviewList"></div>
+        <div class="review-item">
+          <div class="avatar">A</div>
+          <div class="review-body">
+            <b>Adnan <span style="color:var(--muted);font-weight:600">• Pantai Wangi</span></b>
+            <small>★★★★★</small>
+            <div>Pemandangan luar biasa!</div>
+          </div>
+        </div>
+        <div class="review-item">
+          <div class="avatar">Z</div>
+          <div class="review-body">
+            <b>Azka <span style="color:var(--muted);font-weight:600">• Pantai Wangi</span></b>
+            <small>★★★★☆</small>
+            <div>Pantainya bersih tapi ramai</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -179,185 +96,6 @@
       <div style="color:var(--muted)">Kontak: info@jelajahwisata.local</div>
     </footer>
   </div>
-
-  <!-- Modal detail -->
-  <div class="modal" id="modal">
-    <div class="modal-card">
-      <div style="position:relative">
-        <button class="close" id="closeBtn">✕</button>
-        <div class="modal-top">
-          <div class="gallery" id="modalImage" style="background-image:url('')"></div>
-          <div class="modal-content">
-            <h3 id="modalTitle">—</h3>
-            <div class="meta"><span id="modalLocation">—</span><span id="modalRating">—</span></div>
-            <p id="modalDesc" style="margin-top:12px;color:var(--muted)">—</p>
-
-            <h4 style="margin-top:14px">Informasi Singkat</h4>
-            <ul id="modalInfo" style="margin:6px 0 0;color:var(--muted)"></ul>
-
-            <h4 style="margin-top:12px">Ulasan Pengunjung</h4>
-            <div id="modalReviews" style="margin-top:8px;color:var(--muted)"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // ---------- Dummy data ----------
-    const DATA = {
-      categories: ['Pantai','Gunung','Sejarah','Kuliner','Alam','Museum','Rekreasi'],
-      destinations: [
-        {id:1,title:'Pantai Wangi',loc:'Bali, Kuta',cat:'Pantai',img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=60',rating:4.6,reviews:[{u:'Adnan',r:5,t:'Pemandangan luar biasa!'},{u:'Azka',r:4,t:'Pantainya bersih tapi ramai'}],info:{harga:'Gratis',jam:'06:00-18:00'}},
-        {id:2,title:'Gunung Seru',loc:'Jawa Barat, Garut',cat:'Gunung',img:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=60',rating:4.8,reviews:[{u:'Fikri',r:5,t:'Sunrise terbaik'},],info:{medan:'Menantang',jam:'Bebas'}},
-        {id:3,title:'Museum Merah Putih',loc:'DKI Jakarta',cat:'Museum',img:'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1200&q=60',rating:4.2,reviews:[{u:'Gerald',r:4,t:'Koleksinya lengkap'},{u:'Muhamad',r:4,t:'Bagus untuk edukasi'}],info:{harga:'Rp10.000',jam:'09:00-16:00'}},
-        {id:4,title:'Kuliner Tepi Sungai',loc:'Yogyakarta',cat:'Kuliner',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=60',rating:4.4,reviews:[{u:'Azka',r:5,t:'Makanan enak & murah'}],info:{rekomendasi:'Sate ikan'}} ,
-        {id:5,title:'Air Terjun Selokan',loc:'Banten',cat:'Alam',img:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=60',rating:4.7,reviews:[{u:'Adnan',r:5,t:'Segar sekali'}],info:{akses:'Jalan setapak 20 menit'}},
-        {id:6,title:'Taman Rekreasi Cahaya',loc:'Surabaya',cat:'Rekreasi',img:'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=60',rating:4.1,reviews:[{u:'Musa',r:4,t:'Bagus untuk keluarga'}],info:{harga:'Rp25.000'}},
-      ]
-    };
-
-    // ---------- helpers ----------
-    const $ = sel => document.querySelector(sel)
-    const $$ = sel => Array.from(document.querySelectorAll(sel))
-
-    // render categories
-    const categoriesEl = $('#categories');
-    let activeCat = null;
-    function renderCategories(){
-      categoriesEl.innerHTML = '';
-      DATA.categories.forEach(c=>{
-        const btn = document.createElement('button');
-        btn.className='cat'+(c===activeCat? ' active':'');
-        btn.textContent=c;
-        btn.onclick = ()=>{ activeCat = (activeCat===c? null:c); renderApp(); }
-        categoriesEl.appendChild(btn);
-      });
-    }
-
-    // render grid
-    const grid = $('#grid');
-    function formatStars(n){
-      const full = '★'.repeat(Math.round(n));
-      const empty = '☆'.repeat(5-Math.round(n));
-      return `<span class="stars">${full}${empty}</span>`;
-    }
-    function renderGrid(list){
-      grid.innerHTML = '';
-      list.forEach(d=>{
-        const el = document.createElement('article'); el.className='card';
-        el.innerHTML = `
-          <div class="media" style="background-image:url('${d.img}')"></div>
-          <div class="content">
-            <div style="display:flex;justify-content:space-between;align-items:start">
-              <div>
-                <div class="title">${d.title}</div>
-                <div style="color:var(--muted);font-size:13px">${d.loc}</div>
-              </div>
-              <div style="text-align:right">
-                <div class="rating">${formatStars(d.rating)} <div style="font-size:13px;color:var(--muted);">${d.rating}</div></div>
-              </div>
-            </div>
-            <div class="meta">
-              <div style="font-size:13px;color:var(--muted)">${d.cat}</div>
-              <button data-id="${d.id}" class="detailBtn" style="background:transparent;border:0;color:var(--accent);cursor:pointer">Lihat</button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(el);
-      });
-
-      // attach detail button handlers
-      Array.from(document.querySelectorAll('.detailBtn')).forEach(b=>{
-        b.addEventListener('click',e=>{
-          const id = Number(e.currentTarget.dataset.id);
-          openModal(id);
-        });
-      });
-    }
-
-    // render reviews
-    function renderReviews(){
-      const list = $('#reviewList');
-      // flatten latest reviews
-      const flat = [];
-      DATA.destinations.forEach(d=>{
-        (d.reviews||[]).forEach(r=>flat.push({...r,place:d.title,when:'Hari ini'}));
-      });
-      // sort by r descending approx
-      flat.sort((a,b)=> (b.r-a.r));
-      list.innerHTML = flat.slice(0,6).map(r=>`
-        <div class="review-item">
-          <div class="avatar">${r.u[0]||'U'}</div>
-          <div class="review-body">
-            <b>${r.u} <span style="color:var(--muted);font-weight:600">• ${r.place}</span></b>
-            <small>${'★'.repeat(r.r)} ${'☆'.repeat(5-r.r)}</small>
-            <div style="margin-top:6px">${r.t}</div>
-          </div>
-        </div>
-      `).join('');
-
-      $('#recentReview').textContent = flat[0]? `${flat[0].u} • ${flat[0].place}` : '—';
-    }
-
-    // stats
-    function renderStats(list){
-      $('#totalDest').textContent = list.length;
-      const avg = (list.reduce((s,d)=>s+d.rating,0)/Math.max(1,list.length)).toFixed(2);
-      $('#avgRating').textContent = avg;
-    }
-
-    // search & filter
-    function filterData(q){
-      q = (q||'').toLowerCase().trim();
-      return DATA.destinations.filter(d=>{
-        if(activeCat && d.cat!==activeCat) return false;
-        if(!q) return true;
-        return (d.title+d.loc+d.cat).toLowerCase().includes(q);
-      });
-    }
-
-    // modal
-    const modal = $('#modal');
-    function openModal(id){
-      const d = DATA.destinations.find(x=>x.id===id); if(!d) return;
-      $('#modalImage').style.backgroundImage = `url('${d.img}')`;
-      $('#modalTitle').textContent = d.title;
-      $('#modalLocation').textContent = d.loc;
-      $('#modalRating').innerHTML = formatStars(d.rating)+` <span style="color:var(--muted);font-size:13px">${d.rating}</span>`;
-      $('#modalDesc').textContent = (d.reviews && d.reviews[0])? d.reviews[0].t : 'Belum ada deskripsi.';
-      // info
-      const infoEl = $('#modalInfo'); infoEl.innerHTML='';
-      for(const k in (d.info||{})){
-        const li = document.createElement('li'); li.textContent = `${k}: ${d.info[k]}`; infoEl.appendChild(li);
-      }
-      // reviews
-      const mrev = $('#modalReviews'); mrev.innerHTML = (d.reviews||[]).map(r=>`<div style="margin-bottom:6px"><b>${r.u}</b> <small style="color:var(--muted)">• ${'★'.repeat(r.r)}</small><div style="color:var(--muted)">${r.t}</div></div>`).join('');
-      modal.classList.add('show');
-    }
-    $('#closeBtn').addEventListener('click',()=>modal.classList.remove('show'));
-    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show') });
-
-    // main render
-    function renderApp(){
-      renderCategories();
-      const q = $('#search').value;
-      const list = filterData(q);
-      renderGrid(list);
-      renderStats(list);
-      renderReviews();
-    }
-
-    // init
-    document.getElementById('searchBtn').addEventListener('click',renderApp);
-    document.getElementById('search').addEventListener('keydown',e=>{ if(e.key==='Enter') renderApp(); });
-
-    // initial populate categories and grid
-    renderApp();
-
-    // Accessibility tiny improvement: keyboard shortcut / to focus search
-    window.addEventListener('keydown',e=>{ if(e.key==='/' && document.activeElement.tagName!=='INPUT') { e.preventDefault(); $('#search').focus(); } });
-
-  </script>
 </body>
+
 </html>
